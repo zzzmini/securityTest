@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org"
+      xmlns:sec="www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h2>사용자 페이지</h2>
+  <a th:href="@{/}">돌아가기</a>
+  <div th:if="${#authorization.expression('isAuthenticated()')}
+    and ${username}==${#authentication.name}">
+      <input type="button" value="수정">
+  </div>
+</body>
+</html>

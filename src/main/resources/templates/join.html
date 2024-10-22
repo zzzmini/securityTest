@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org"
+    xmlns:sec="www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h2>회원가입 페이지</h2>
+  <hr>
+  <form th:action="@{/joinProc}" method="post" name="joinForm">
+      id : <input id="username" name="username"><br>
+      password : <input id="password" name="password"><br>
+      <input type="submit" value="회원가입"/>
+  </form>
+  <a th:href="@{/}">돌아가기</a>
+</body>
+</html>
