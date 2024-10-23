@@ -4,6 +4,7 @@ import com.my.securityTest.dto.JoinDTO;
 import com.my.securityTest.service.JoinService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -59,4 +60,23 @@ public class JoinController {
         }
         return "redirect:/";
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/auth")
+    public String preAuthorizePage() {
+        return "authPage";
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,12 +18,12 @@ public class CustomUserDetailService
 
     @Override
     public UserDetails loadUserByUsername
-            (String username) throws UsernameNotFoundException {
+            (String email) throws UsernameNotFoundException {
         UserEntity userData = entityRepository
-                .findByUsername(username);
+                .findByEmail(email);
         // 생성한 엔티티를 UserDetails 로 전송
         if (!ObjectUtils.isEmpty(userData)) {
-            return new CustomUserDetails(userData);
+            return new CustomUserDetails(userData, null);
         }
         return null;
     }

@@ -19,7 +19,7 @@ public class JoinService {
     public void joinProcess(JoinDTO joinDTO) {
         // 기존 같은 유저가 있는지 확인
         Boolean isUser = userRepository
-                .existsByUsername(joinDTO.getUsername());
+                .existsByEmail(joinDTO.getEmail());
 
         if (isUser) {
             return;
@@ -27,21 +27,18 @@ public class JoinService {
 
         // 없으면 회원가입
         UserEntity data = new UserEntity();
-        data.setUsername(joinDTO.getUsername());
+        data.setEmail(joinDTO.getEmail());
         data.setPassword(
                 bCryptPasswordEncoder
                         .encode(joinDTO.getPassword())
         );
-        if (data.getUsername().equals("admin")) {
-            data.setRole(UserRole.ROLE_ADMIN);
-        } else {
-            data.setRole(UserRole.ROLE_USER);
-        }
-
+//        if (data.getEmail().equals("admin")) {
+//            data.setRole(UserRole.ROLE_ADMIN);
+//        } else {
+//            data.setRole(UserRole.ROLE_USER);
+//        }
+        data.setRole(UserRole.ROLE_USER);
         userRepository.save(data);
     }
-
-    public void loginProcess(JoinDTO joinDTO) {
-
-    }
 }
+

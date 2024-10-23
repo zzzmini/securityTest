@@ -1,7 +1,10 @@
 package com.my.securityTest.config;
 
+import com.my.securityTest.service.Oauth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -10,7 +13,11 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+    @Autowired
+    Oauth2UserService oauth2UserService;
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -33,9 +40,9 @@ public class SecurityConfig {
                 .formLogin((auth)-> auth
                         .loginPage("/login")
                         .loginProcessingUrl("/loginProc")
-                        .usernameParameter("username")
-                                .defaultSuccessUrl("/")
-//                        .usernameParameter("email")
+//                        .usernameParameter("username")
+                        .defaultSuccessUrl("/")
+                        .usernameParameter("email")
                         .permitAll()
                 );
         http
@@ -56,6 +63,13 @@ public class SecurityConfig {
 
 //        http
 //                .csrf((auth) -> auth.disable());
+        http
+                .oauth2Login((oAuth) -> oAuth
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/")
+                        .userInfoEndpoint((userInfo) -> userInfo
+                                .userService(oauth2UserService)));
+
         return http.build();
     }
 }

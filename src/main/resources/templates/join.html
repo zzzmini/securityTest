@@ -9,8 +9,8 @@
   <h2>회원가입 페이지</h2>
   <hr>
   <form th:action="@{/joinProc}" method="post" name="joinForm">
-      id : <input id="username" name="username"><br>
-      password : <input id="password" name="password"><br>
+      id : <input id="email" type="email" name="email"><br>
+      password : <input id="password" type="password" name="password"><br>
       <input type="submit" value="회원가입"/>
   </form>
   <a th:href="@{/}">돌아가기</a>
